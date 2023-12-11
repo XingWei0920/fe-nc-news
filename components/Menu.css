@@ -1,0 +1,8 @@
+.nav{
+    display: flex;
+    flex-direction:row;
+    position:relative;
+    bottom: 0;
+    width:100%;
+    list-style:armenian;
+}

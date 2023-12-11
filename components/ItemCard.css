@@ -1,0 +1,11 @@
+.itemBlock{
+    font-size: 20px;
+    font-weight: 500;
+    margin:25px;
+    padding:20px;
+    background-color: rgb(118, 212, 106);
+    border-radius: 15px;
+    text-align: left;
+    color: black;
+    box-shadow:  5px 5px 50px rgb(102, 131, 141);
+}
