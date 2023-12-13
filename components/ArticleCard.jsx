@@ -5,7 +5,7 @@ const ArticleCard=(props)=>{
     const {article}=props
     return (
         <li className="itemBlock">
-        <Link to={`/api/users/${article.article_id}`}>
+        <Link to={`/api/articles/${article.article_id}`}>
             Details
             </Link>
         <p>Article Author: {article.author}</p>
