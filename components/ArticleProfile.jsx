@@ -6,7 +6,7 @@ import {getArticle} from "../utils/api"
  
 
 
-const UserProfile=()=>{
+const ArticleProfile=()=>{
 
     const {article_id}=useParams()
     const [article, setArticle]=useState([])
@@ -41,4 +41,4 @@ const UserProfile=()=>{
   </>
     )
 }
-export default UserProfile
+export default ArticleProfile
