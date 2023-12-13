@@ -19,6 +19,7 @@ const ArticleProfile=()=>{
         })
       },[])
 
+      
      if (isLoading)
      {
         return <h2>Loading ...</h2>
