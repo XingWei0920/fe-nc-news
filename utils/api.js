@@ -13,3 +13,9 @@ export const getArticles=()=>{
     .then(({data})=>{
     return data.articles})
 }
+
+export const getCommentsOfAnArticle=(article_id)=>{
+    return axios.get(`https://xing-wei-app.onrender.com/api/articles/${article_id}/comments`)
+    .then(({data})=>{
+    return data.comments})
+}

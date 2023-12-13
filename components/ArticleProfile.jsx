@@ -1,8 +1,8 @@
 import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react"
 
-import ArticleCard from "./ArticleCard"
-import {getArticle} from "../utils/api"
+import CommentCard from "./CommentCard"
+import {getArticle, getCommentsOfAnArticle} from "../utils/api"
  
 
 
@@ -10,6 +10,7 @@ const ArticleProfile=()=>{
 
     const {article_id}=useParams()
     const [article, setArticle]=useState([])
+    const [comments, setComments]=useState([])
     const [isLoading, setIsLoading]=useState(true)
     
     useEffect(()=>{
@@ -20,6 +21,14 @@ const ArticleProfile=()=>{
         })
       },[])
 
+    useEffect(()=>{
+      getCommentsOfAnArticle(article_id)
+        .then((response)=>{ 
+          setComments(response)
+          setIsLoading(false)
+          })
+        },[])
+
       
      if (isLoading)
      {
@@ -29,15 +38,23 @@ const ArticleProfile=()=>{
     return (
         <>
         <h2 className="itemBlock">
-        <p>Article Author: {article.author}</p>
-        <p>Article Topic: {article.topic}</p>
-        <p>Article Votes: {article.votes}</p>
-        <p>Article Title: {article.title}</p>
-        <p>Article Body: {article.body}</p>
-        <p>Article Created At: {new Date(article.created_at).toUTCString()}</p>
-        <p>Article Comment Count: {article.comment_count}</p>
+        <p>Author: {article.author}</p>
+        <p>Topic: {article.topic}</p>
+        <p>Votes: {article.votes}</p>
+        <p>Title: {article.title}</p>
+        <p> Body: {article.body}</p>
+        <p> Created At: {new Date(article.created_at).toUTCString()}</p>
+        <p> Comment Count: {article.comment_count}</p>
         <img src={article.article_img_url} alt="image" width="100" height="100"></img>
         </h2>  
+
+        <ul>
+            {comments.map((comment)=>
+            {
+                return <CommentCard article={comment} key={comment.comment_id}/>
+            })}
+        </ul>
+       
   </>
     )
 }
