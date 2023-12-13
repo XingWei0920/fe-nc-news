@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom'
 
 const ArticleCard=(props)=>{
     const {article}=props
-    console.log(article)
     return (
         <li className="itemBlock">
         <Link to={`/api/articles/${article.article_id}`}>
