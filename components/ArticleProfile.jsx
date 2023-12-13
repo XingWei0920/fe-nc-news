@@ -24,7 +24,6 @@ const ArticleProfile=()=>{
     useEffect(()=>{
       getCommentsOfAnArticle(article_id)
         .then((response)=>{ 
-          console.log(response)
           setComments(response)
           setIsLoading(false)
           })
@@ -49,7 +48,6 @@ const ArticleProfile=()=>{
         <img src={article.article_img_url} alt="image" width="100" height="100"></img>
         </h2>  
 
-        <h2 className="itemBlock">All Comments Lists</h2>    
         <ul>
             {comments.map((comment)=>
             {
