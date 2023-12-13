@@ -8,3 +8,8 @@ export const getArticle=(article_id)=>{
     return data.article})
 }
 
+export const getArticles=()=>{
+    return axios.get(`https://xing-wei-app.onrender.com/api/articles/`)
+    .then(({data})=>{
+    return data.articles})
+}
