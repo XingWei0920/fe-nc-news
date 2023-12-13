@@ -3,9 +3,10 @@ import {Link} from 'react-router-dom'
 
 const ArticleCard=(props)=>{
     const {article}=props
+    console.log(article)
     return (
         <li className="itemBlock">
-        <Link to={`/api/users/${article.article_id}`}>
+        <Link to={`/api/articles/${article.article_id}`}>
             Details
             </Link>
         <p>Article Author: {article.author}</p>
