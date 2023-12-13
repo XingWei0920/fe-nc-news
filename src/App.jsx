@@ -17,6 +17,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home/>} />
       <Route path="/api/articles" element={<ArticleList/>} /> 
+      <Route path="/articles/:article_id" element={<UserProfile/>} />
     </Routes>
     </ArticlesProvider>
      
