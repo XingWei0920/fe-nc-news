@@ -11,6 +11,7 @@ const ArticleProfile=()=>{
     const {article_id}=useParams()
     const [article, setArticle]=useState([])
     const [isLoading, setIsLoading]=useState(true)
+   
     
     useEffect(()=>{
     getArticle(article_id)
@@ -19,12 +20,20 @@ const ArticleProfile=()=>{
         setIsLoading(false)
         })
       },[])
-
-      
+           
      if (isLoading)
      {
         return <h2>Loading ...</h2>
      }
+    
+     const handleSubmitOrder=()=>{
+      setArticle((article)=>({
+        ...article,
+      votes:article.votes+1
+      }))
+   }
+
+  
 
     return (
         <>
@@ -38,6 +47,13 @@ const ArticleProfile=()=>{
         <p>Article Comment Count: {article.comment_count}</p>
         <img src={article.article_img_url} alt="image" width="100" height="100"></img>
         </h2>  
+
+        <h2>Like this article?</h2>
+
+
+
+<button className="form-button" data-alt-text="Thanks for Voting" onClick={handleSubmitOrder}>Vote!</button>
+
   </>
     )
 }
