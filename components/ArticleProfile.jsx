@@ -40,12 +40,12 @@ const ArticleProfile=()=>{
       event.preventDefault()
       const inputs = [...document.getElementsByClassName("comment")]
       console.log( inputs)
-      const postBody={"body": inputs[0].value, "created_at":inputs[1].value, "article_id":article_id, "votes":0, "author":inputs[2].value}
-      postComment(postBody, article_id).then((newItemsFromApi)=>{
-          setItems((currItems)=>{
+      const postBody={"body": inputs[0].value, "author":inputs[1].value}
+      postComment(postBody, article_id).then((newCommentsFromApi)=>{
+        setComments((currItems)=>{
               console.log(currItems)
-              console.log(newItemsFromApi)
-              return [newItemsFromApi, ...currItems]
+              console.log(newCommentsFromApi)
+              return [newCommentsFromApi, ...currItems]
           })
       })
   }
@@ -70,14 +70,6 @@ const ArticleProfile=()=>{
 <p>
 <input
   type="text"  class="comment"  placeholder="Your comment"  id="comment"  name="comment" required
-/>
-</p>
-<p>
-<label class="label" for="comment">Please choose a time.</label>
-</p>
-<p>
-<input
-  type="datetime-local"  class="comment"  id="comment"  name="comment" required
 />
 </p>
 <p>
