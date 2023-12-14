@@ -11,6 +11,7 @@ const ArticleProfile=()=>{
     const {article_id}=useParams()
     const [article, setArticle]=useState([])
     const [isLoading, setIsLoading]=useState(true)
+    const [err, setErr]=useState(null)
    
     
     useEffect(()=>{
@@ -25,17 +26,22 @@ const ArticleProfile=()=>{
      {
         return <h2>Loading ...</h2>
      }
-    
+
      const handleSubmitOrder=()=>{
-      const newVote={inc_votes:article.votes+1}
+      setArticle((article)=>({
+        ...article,
+      votes:article.votes+1}))
+      setErr(null)
+
+      const newVote={inc_votes:article.votes}
       updateArticleById(article_id,newVote)
-      .then((response)=>{
+      .catch((err)=>{
         setArticle((article)=>({
           ...article,
-        votes:response.votes}))
+        votes:article.votes-1}))
+        setErr('Something went wrong, please try again.')
       })
-   }
-
+    }
   
 
     return (
