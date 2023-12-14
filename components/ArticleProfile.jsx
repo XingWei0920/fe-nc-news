@@ -81,7 +81,7 @@ const ArticleProfile=()=>{
 />
 </p>
 <p>
-<label class="label" for="comment">Author.</label>
+<label class="label" for="comment">Author</label>
 </p>
 <p>
 <input
