@@ -33,7 +33,7 @@ const ArticleProfile=()=>{
       votes:article.votes+1}))
       setErr(null)
 
-      const newVote={inc_votes:article.votes}
+      const newVote={inc_votes:article.votes+1}
       updateArticleById(article_id,newVote)
       .catch((err)=>{
         setArticle((article)=>({
@@ -56,7 +56,7 @@ const ArticleProfile=()=>{
         <p>Article Comment Count: {article.comment_count}</p>
         <img src={article.article_img_url} alt="image" width="100" height="100"></img>
         </h2>  
-
+        {err? <p>{err}</p> : null}
         <h2>Like this article?</h2>
 
 
