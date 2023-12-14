@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react"
 
 import ArticleCard from "./ArticleCard"
-import {getArticle} from "../utils/api"
+import {getArticle, updateArticleById} from "../utils/api"
  
 
 
@@ -27,10 +27,13 @@ const ArticleProfile=()=>{
      }
     
      const handleSubmitOrder=()=>{
-      setArticle((article)=>({
-        ...article,
-      votes:article.votes+1
-      }))
+      const newVote={inc_votes:article.votes+1}
+      updateArticleById(article_id,newVote)
+      .then((response)=>{
+        setArticle((article)=>({
+          ...article,
+        votes:response.votes}))
+      })
    }
 
   
