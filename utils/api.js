@@ -19,3 +19,11 @@ export const getCommentsOfAnArticle=(article_id)=>{
     .then(({data})=>{
     return data.comments})
 }
+
+export const postComment=(newComment,article_id)=>{
+    return axios.post(`https://xing-wei-app.onrender.com/api/articles/${article_id}/comments`, newComment)
+    .then(({data})=>{
+        console.log(data)
+    return data.comment})
+
+}
