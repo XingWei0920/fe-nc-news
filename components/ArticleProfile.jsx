@@ -44,14 +44,9 @@ const ArticleProfile=()=>{
      const handleSubmitComment=(event)=>{
       setIsPosting(true)
       event.preventDefault()
-      // const inputs = [...document.getElementsByClassName("comment")]
-      // console.log( inputs)
-      // const postBody={"body": inputs[0].value, "author":inputs[1].value}
       const postBody={"body": newComment, "author":newAuthor}
       postComment(postBody, article_id).then((newCommentsFromApi)=>{
         setComments((currItems)=>{
-              console.log(currItems)
-              console.log(newCommentsFromApi)
               setIsPosting(false)
               return [newCommentsFromApi, ...currItems]
           })

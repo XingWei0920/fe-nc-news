@@ -25,7 +25,6 @@ export const postComment=(newComment,article_id)=>{
     console.log(newComment)
     return axios.post(`https://xing-wei-app.onrender.com/api/articles/${article_id}/comments`, newComment)
     .then(({data})=>{
-        console.log(data)
     return data.comment})
     .catch()
 
