@@ -14,11 +14,21 @@ export const getArticles=()=>{
     return data.articles})
 }
 
+
+export const updateArticleById=(article_id, newVote)=>{
+    return axios.patch(`https://xing-wei-app.onrender.com/api/articles/${article_id}`, newVote)
+    .then(({data})=>{
+        return data.article})
+    .catch()
+
+}
+
 export const getCommentsOfAnArticle=(article_id)=>{
     return axios.get(`https://xing-wei-app.onrender.com/api/articles/${article_id}/comments`)
     .then(({data})=>{
     return data.comments})
 }
+
 
 export const postComment=(newComment,article_id)=>{
     console.log(article_id)
@@ -29,3 +39,4 @@ export const postComment=(newComment,article_id)=>{
     .catch()
 
 }
+

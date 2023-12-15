@@ -1,8 +1,14 @@
 import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react"
 
+
+import ArticleCard from "./ArticleCard"
+
 import CommentCard from "./CommentCard"
-import {getArticle, getCommentsOfAnArticle, postComment} from "../utils/api"
+
+import {getArticle, getCommentsOfAnArticle, updateArticleById, postComment} from "../utils/api"
+
+
  
 
 
@@ -12,10 +18,15 @@ const ArticleProfile=()=>{
     const [article, setArticle]=useState([])
     const [comments, setComments]=useState([])
     const [isLoading, setIsLoading]=useState(true)
+
     const [newComment,setNewComment]=useState()
     const [newAuthor,setNewAuthor]=useState()
     const [isPosting,setIsPosting]=useState(false)
     const [err,setErr]=useState(null)
+
+
+    const [err, setErr]=useState(null)
+   
 
     
     useEffect(()=>{
@@ -26,6 +37,9 @@ const ArticleProfile=()=>{
         })
       },[])
 
+           
+
+
     useEffect(()=>{
       getCommentsOfAnArticle(article_id)
         .then((response)=>{ 
@@ -35,10 +49,12 @@ const ArticleProfile=()=>{
         },[])
 
       
+
      if (isLoading)
      {
         return <h2>Loading ...</h2>
      }
+
 
      
      const handleSubmitComment=(event)=>{
@@ -55,6 +71,24 @@ const ArticleProfile=()=>{
       setNewComment("")
       setNewAuthor("")
   }
+
+     const handleSubmitOrder=()=>{
+      setArticle((article)=>({
+        ...article,
+      votes:article.votes+1}))
+      setErr(null)
+
+      const newVote={inc_votes:article.votes+1}
+      updateArticleById(article_id,newVote)
+      .catch((err)=>{
+        setArticle((article)=>({
+          ...article,
+        votes:article.votes-1}))
+        setErr('Something went wrong, please try again.')
+      })
+    }
+  
+
 
     return (
         <>
@@ -91,13 +125,20 @@ const ArticleProfile=()=>{
 {err ? <p>{err}</p> : null}
 
 
+        {err? <p>{err}</p> : null}
+        <h2>Like this article?</h2>
+
+
+
+<button className="form-button" data-alt-text="Thanks for Voting" onClick={handleSubmitOrder}>Vote!</button>
+
         <ul>
             {comments.map((comment)=>
             {
                 return <CommentCard article={comment} key={comment.comment_id}/>
             })}
         </ul>
-       
+
   </>
     )
 }
