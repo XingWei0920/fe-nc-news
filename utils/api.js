@@ -27,5 +27,6 @@ export const postComment=(newComment,article_id)=>{
     .then(({data})=>{
         console.log(data)
     return data.comment})
+    .catch()
 
 }

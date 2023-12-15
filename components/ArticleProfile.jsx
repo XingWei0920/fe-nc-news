@@ -12,6 +12,11 @@ const ArticleProfile=()=>{
     const [article, setArticle]=useState([])
     const [comments, setComments]=useState([])
     const [isLoading, setIsLoading]=useState(true)
+    const [newComment,setNewComment]=useState()
+    const [newAuthor,setNewAuthor]=useState()
+    const [isPosting,setIsPosting]=useState(false)
+    const [err,setErr]=useState(null)
+
     
     useEffect(()=>{
     getArticle(article_id)
@@ -37,17 +42,23 @@ const ArticleProfile=()=>{
 
      
      const handleSubmitComment=(event)=>{
+      setIsPosting(true)
       event.preventDefault()
-      const inputs = [...document.getElementsByClassName("comment")]
-      console.log( inputs)
-      const postBody={"body": inputs[0].value, "author":inputs[1].value}
+      // const inputs = [...document.getElementsByClassName("comment")]
+      // console.log( inputs)
+      // const postBody={"body": inputs[0].value, "author":inputs[1].value}
+      const postBody={"body": newComment, "author":newAuthor}
       postComment(postBody, article_id).then((newCommentsFromApi)=>{
         setComments((currItems)=>{
               console.log(currItems)
               console.log(newCommentsFromApi)
+              setIsPosting(false)
               return [newCommentsFromApi, ...currItems]
           })
       })
+      .catch((err)=>{setErr('Something went wrong, please try again.')})
+      setNewComment("")
+      setNewAuthor("")
   }
 
     return (
@@ -69,7 +80,7 @@ const ArticleProfile=()=>{
 </p>
 <p>
 <input
-  type="text"  class="comment"  placeholder="Your comment"  id="comment"  name="comment" required
+  type="text"  class="comment" value={newComment} onChange={(event)=>setNewComment(event.target.value)} placeholder="Your comment"  id="comment" rows={5} cols={50} name="comment" required
 />
 </p>
 <p>
@@ -77,11 +88,12 @@ const ArticleProfile=()=>{
 </p>
 <p>
 <input
-  type="text"  class="comment"  placeholder="Your name"  id="comment"  name="comment" required
+  type="text"  class="comment" value={newAuthor} onChange={(event)=>setNewAuthor(event.target.value)} placeholder="Your name"  id="comment"  name="comment" required
 />
 </p>
-<button class="form-button">Submit!</button>
+<button class="form-button" disabled={isPosting}>{isPosting ? "Posting..." :"Submit!"}</button>
 </form>
+{err ? <p>{err}</p> : null}
 
 
         <ul>
