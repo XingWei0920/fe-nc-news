@@ -6,7 +6,7 @@ const CommentCard=(props)=>{
     return (
         
         <li className="itemBlock">
-        <p><large> Commented By {article.author}</large></p>
+        <p> Commented By {article.author}</p>
         <p>{article.votes} votes!</p>
         <p>Created At: {new Date(article.created_at).toUTCString()}</p>
         <p><small> {article.body}</small></p>
