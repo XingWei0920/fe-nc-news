@@ -5,7 +5,7 @@ import Menu from '../components/Menu'
 import './App.css'
 import Home from '../components/Home';
 import ArticleProfile from '../components/ArticleProfile'
-
+import Error from '../components/Error';
 import { ArticlesProvider } from '../contexts/ArticlesContext';
 function App() {
   
@@ -19,6 +19,7 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/api/articles" element={<ArticleList/>} /> 
       <Route path="/api/articles/:article_id" element={<ArticleProfile/>} />
+      <Route path="/*" element={<Error message="Route not found!"/>} /> 
     </Routes>
     </ArticlesProvider>
      

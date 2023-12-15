@@ -1,6 +1,6 @@
 import {useParams} from "react-router-dom"
 import {useState, useEffect} from "react"
-
+import Error from "./Error"
 
 import ArticleCard from "./ArticleCard"
 
@@ -9,25 +9,18 @@ import CommentCard from "./CommentCard"
 import {getArticle, getCommentsOfAnArticle, updateArticleById, postComment} from "../utils/api"
 
 
- 
-
-
 const ArticleProfile=()=>{
 
     const {article_id}=useParams()
     const [article, setArticle]=useState([])
     const [comments, setComments]=useState([])
     const [isLoading, setIsLoading]=useState(true)
+    const [apiError, setApiError]=useState(null)
 
-    const [newComment,setNewComment]=useState()
+    const [newComment,setNewComment]=useState("")
     const [newAuthor,setNewAuthor]=useState()
     const [isPosting,setIsPosting]=useState(false)
     const [err,setErr]=useState(null)
-
-
-    const [err, setErr]=useState(null)
-   
-
     
     useEffect(()=>{
     getArticle(article_id)
@@ -35,10 +28,12 @@ const ArticleProfile=()=>{
         setArticle(response[0])
         setIsLoading(false)
         })
-      },[])
-
-           
-
+        .catch((err)=>{
+          setApiError(err)
+          setIsLoading(false)
+          setArticle({})
+        })
+      },[article_id])
 
     useEffect(()=>{
       getCommentsOfAnArticle(article_id)
@@ -48,15 +43,6 @@ const ArticleProfile=()=>{
           })
         },[])
 
-      
-
-     if (isLoading)
-     {
-        return <h2>Loading ...</h2>
-     }
-
-
-     
      const handleSubmitComment=(event)=>{
       setIsPosting(true)
       event.preventDefault()
@@ -88,8 +74,13 @@ const ArticleProfile=()=>{
       })
     }
   
-
-
+    if (isLoading)
+    {
+       return <h2>Loading ...</h2>;
+    } else if(apiError)
+    {
+     return <Error message={apiError.message}/>
+    } else {
     return (
         <>
         <h2 className="itemBlock">
@@ -108,10 +99,10 @@ const ArticleProfile=()=>{
 <label class="label" for="comment">Please enter yout comment for this article.</label>
 </p>
 <p>
-<input
-  type="text"  class="comment" value={newComment} onChange={(event)=>setNewComment(event.target.value)} placeholder="Your comment"  id="comment" rows={5} cols={50} name="comment" required
-/>
+<textarea
+  type="text"  class="comment" value={newComment} onChange={(event)=>setNewComment(event.target.value)} placeholder="Your comment"  id="comment" rows={5} cols={50} name="comment" required/>
 </p>
+{newComment.length>250 ? <Error message="That message is too long!"/> : <p>{`${250-newComment.length} characters remaining`}</p>}
 <p>
 <label class="label" for="comment">Author</label>
 </p>
@@ -120,15 +111,12 @@ const ArticleProfile=()=>{
   type="text"  class="comment" value={newAuthor} onChange={(event)=>setNewAuthor(event.target.value)} placeholder="Your name"  id="comment"  name="comment" required
 />
 </p>
+
 <button class="form-button" disabled={isPosting}>{isPosting ? "Posting..." :"Submit!"}</button>
 </form>
+
 {err ? <p>{err}</p> : null}
-
-
-        {err? <p>{err}</p> : null}
         <h2>Like this article?</h2>
-
-
 
 <button className="form-button" data-alt-text="Thanks for Voting" onClick={handleSubmitOrder}>Vote!</button>
 
@@ -141,5 +129,5 @@ const ArticleProfile=()=>{
 
   </>
     )
-}
+          }}
 export default ArticleProfile

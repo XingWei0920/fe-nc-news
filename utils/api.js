@@ -6,6 +6,9 @@ export const getArticle=(article_id)=>{
     return axios.get(`https://xing-wei-app.onrender.com/api/articles/${article_id}`)
     .then(({data})=>{
     return data.article})
+    .catch((err)=>{
+        return Promise.reject({status: err.response.request.status, message:err.response.data.msg})
+    })
 }
 
 export const getArticles=()=>{
